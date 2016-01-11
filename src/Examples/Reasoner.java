@@ -49,7 +49,11 @@ public class Reasoner {
 	// type:
 	// Path to YOUR-PROJECTROOT-IN-WORKSPACE\xjc.bat yourschemaname.xsd -d src
 	// -p yourclasspackagename
+<<<<<<< HEAD
 
+=======
+//yooooo00000
+>>>>>>> origin/master
 	public CarRental ourrental; 
 	static SimpleGUI Myface;
 	// The lists holding the class instances of all domain entities
@@ -83,6 +87,8 @@ public class Reasoner {
 	
 	public String brand ="";
 
+	public String brand ="";
+	
 	public String tooltipstring = "";
 	public String URL = ""; // URL for Wordnet site
 	public String URL2 = ""; // URL for Wikipedia entry
@@ -351,7 +357,11 @@ public class Reasoner {
 		}
 
 		//#################################################################################
+<<<<<<< HEAD
 
+=======
+		
+>>>>>>> origin/master
 		if (input.contains("3 series") 
 				|| input.contains("5 series")
 				|| input.contains("e230")
@@ -364,17 +374,26 @@ public class Reasoner {
 				|| input.contains("e230")
 				|| input.contains("e230")
 				|| input.contains("c220"))
+<<<<<<< HEAD
 
 		{
 			questiontype = "pickmodel";
 
 
+=======
+		
+		
+		{
+			questiontype = "pickmodel";
+			
+>>>>>>> origin/master
 			if (input.contains("3 series")) {brand = "3series";}
 			if (input.contains("3 series")) {brand = "3series";}									
 			if (input.contains("e230")){brand = "e230";}
 			if (input.contains("mercedes")){brand = "mercedes";}
 			if (input.contains("bmw")){brand = "bmw";}
 			if (input.contains("audi")){brand = "audi";}
+<<<<<<< HEAD
 
 			// .... add more brands
 
@@ -389,6 +408,8 @@ public class Reasoner {
 			//daysofrental = daysofrental1.substring();
 
 			System.out.println("Selecting amount of days" );
+=======
+>>>>>>> origin/master
 		}
 
 
