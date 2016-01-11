@@ -14,9 +14,9 @@ package Examples;
 
 
 import java.io.*;
+
 import javax.xml.bind.*;
 
-//This is a candidate for a name change because you wont deal with a library any more in your conversion
 import Examples.CarRental;
 
 public class JAXB_XMLParser {
@@ -30,7 +30,7 @@ public class JAXB_XMLParser {
 	public JAXB_XMLParser() {
 
 		try {
-			jaxbContext = JAXBContext.newInstance("Examples");  // Package that contains ouer classes																													
+			jaxbContext = JAXBContext.newInstance("examples");  // Package that contains ouer classes																													
 			unmarshaller = jaxbContext.createUnmarshaller();
 		}
 		catch (JAXBException e) {

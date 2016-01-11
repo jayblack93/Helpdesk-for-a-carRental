@@ -4,14 +4,35 @@ import java.io.*;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Vector;
+import java.util.Scanner;
+import java.util.Calendar;
+import java.io.File;
+import java.io.IOException;
 
-import Examples.CarRental;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
 import Examples.Car;
-import Examples.Customer;
+import Examples.CarRental;
 import Examples.Catalog;
+import Examples.Customer;
 import Examples.Employee;
 import Examples.Insurance;
 import Examples.Lending;
@@ -20,19 +41,15 @@ import Examples.ObjectFactory;
 import Examples.Payment;
 import Examples.Reservation;
 import Examples.SimpleGUI;
-
-import java.util.Scanner;
-import java.util.Calendar;
-
 public class Reasoner {
 
 	// The main Class Object holding the Domain knowledge
-
+	//Testing123
 	// Generate the classes automatically with: Opening a command console and
 	// type:
 	// Path to YOUR-PROJECTROOT-IN-WORKSPACE\xjc.bat yourschemaname.xsd -d src
 	// -p yourclasspackagename
-//yooooo
+
 	public CarRental ourrental; 
 	static SimpleGUI Myface;
 	// The lists holding the class instances of all domain entities
@@ -55,14 +72,16 @@ public class Reasoner {
 	public Vector<String> recentobjectsyn = new Vector<String>();
 
 	public String questiontype = ""; //question type selects method to use in a query
-	
+
 	public List classtype = new ArrayList(); // class type selects which class list to query
-	
+
 	public String attributetype = ""; // attributetype selects the attribute to check for in the query
-	
+
 	public Object Currentitemofinterest; // Last Object dealt with
-	
+
 	public Integer Currentindex; // Last Index used
+	
+	public String brand ="";
 
 	public String tooltipstring = "";
 	public String URL = ""; // URL for Wordnet site
@@ -76,24 +95,25 @@ public class Reasoner {
 		SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT_NOW);
 		return sdf.format(cal.getTime());
 	}
-	
+
 	/**public static String modelpicked() {
 		String s = Myface.Input.getText();
 		String[] parts = s.split("_"); //returns an array with the 2 parts
 		String firstPart = parts[0]; //14.015
-		
+
 	}**/
 
+	String result = "";
 	public Reasoner(SimpleGUI myface) {
 
 		Myface = myface; // reference to GUI to update Tooltip-Text basic constructor for the constructors sake :)
-		
+
 	}
 
 	public void initknowledge() { // load all the library knowledge from XML
 
 		JAXB_XMLParser xmlhandler = new JAXB_XMLParser(); // we need an instance of our parser
-		
+
 		File xmlfiletoload = new File("Library.xml"); // we need a (CURRENT) file (xml) to load
 
 		// Init synonmys and typo forms in gazetteers
@@ -110,12 +130,7 @@ public class Reasoner {
 
 		Carsyn.add("cars");
 		Carsyn.add("car");
-		Carsyn.add(" bmw");
-		Carsyn.add("bmws");
 		Carsyn.add(" it");
-		Carsyn.add("BMW");
-		Carsyn.add("mercedes"); 
-		Carsyn.add("audi");
 		Carsyn.add("car");
 		Carsyn.add("ride");
 		Carsyn.add("rides");
@@ -161,7 +176,7 @@ public class Reasoner {
 			theLendingList = ourrental.getLending();
 			theCustomerList = ourrental.getCustomer();
 			ourrentalList.add(ourrental); // force it to be a List
-			
+
 			System.out.println("List reading");
 			System.out.println(ourrental);
 			System.out.println(ourrental.car.size());
@@ -176,13 +191,13 @@ public class Reasoner {
 	}
 
 	public Vector<String> generateAnswer(String input) { // Generate an answer (String Vector)
-		
-		String customername1 = Myface.Input.getText();
-		System.out.println(customername1);
-		
+
+		//String customername1 = Myface.Input.getText();
+		//System.out.println(customername1);
+
 		Vector<String> out = new Vector<String>();
 		out.clear(); // just to make sure this is a new and clean vector
-		 
+
 		questiontype = "none";
 
 		Integer Answered = 0; // check if answer was generated
@@ -198,10 +213,15 @@ public class Reasoner {
 		// ___________________________________________________________________
 
 		String answer = ""; // the answer we return
-		
-		String customername = "Bakar";
-		
-		
+
+		String customername = "";
+		String customername1 = "";
+		String customername01 = "";
+		String customerchoice = "";
+		String customerchoice1 = "";
+		String daysofrental1 = "";
+		String daysofrental = "";
+
 
 		// ----- Check for the kind of question (number, location, etc)------------------------------
 
@@ -218,7 +238,7 @@ public class Reasoner {
 		if (input.contains("do you have") && !input.contains("how many")) { questiontype = "checkfor";input = input.replace("do you have", "<b>do you have</b>"); }
 		if (input.contains("i look for")) { questiontype = "checkfor"; input = input.replace("i look for", "<b>i look for</b>"); }
 		if (input.contains("is there")) { questiontype = "checkfor";input = input.replace("is there", "<b>is there</b>"); }
-		
+
 		if (input.contains("list all") 
 				|| input.contains("view all") 
 				|| input.contains("show all")) 
@@ -295,7 +315,7 @@ public class Reasoner {
 			questiontype = "dontknowcar";
 			System.out.println("view all cars or type random brand");
 		}
-		
+
 		if (input.contains("who has it") 
 				|| input.contains("by who") 
 				|| input.contains("who"))
@@ -307,35 +327,68 @@ public class Reasoner {
 		//#################################################################################
 		if (input.contains("yoo") 
 				|| input.contains("lol"))
-			
-		
+
+
 		{
 			questiontype = "intro";
-//			String customername1 = Myface.Input.getText();
-//			System.out.println(customername1);
+			//			String customername1 = Myface.Input.getText();
+			//			System.out.println(customername1);
 			System.out.println("Find Location");
 		}
-		
+
 		//#################################################################################
-		
+
 		if (input.contains("my name is") 
 				|| input.contains("my names"))
-		
+
 		{
 			questiontype = "name";
-			
-			System.out.println("Find Location");
+			customername1 = Myface.Input.getText();
+			customername01 = customername1.substring(11);
+
+
+			System.out.println("Find Location **" + customername01 + "** END");
 		}
-		
+
 		//#################################################################################
-		
-		if (input.contains("i want the") 
-				|| input.contains("i want the"))
-		
+
+		if (input.contains("3 series") 
+				|| input.contains("5 series")
+				|| input.contains("e230")
+				|| input.contains("mercedes")
+				|| input.contains("bmw")
+				|| input.contains("audi")
+				|| input.contains("porsche")
+				|| input.contains("e230")
+				|| input.contains("e230")
+				|| input.contains("e230")
+				|| input.contains("e230")
+				|| input.contains("c220"))
+
 		{
 			questiontype = "pickmodel";
-			
-			System.out.println("picking model");
+
+
+			if (input.contains("3 series")) {brand = "3series";}
+			if (input.contains("3 series")) {brand = "3series";}									
+			if (input.contains("e230")){brand = "e230";}
+			if (input.contains("mercedes")){brand = "mercedes";}
+			if (input.contains("bmw")){brand = "bmw";}
+			if (input.contains("audi")){brand = "audi";}
+
+			// .... add more brands
+
+		}
+
+		if (input.contains("days") 
+				|| input.contains("day"))
+
+		{
+			questiontype = "periodOfRental";
+			daysofrental1 = Myface.Input.getText();
+			//daysofrental = daysofrental1.substring();
+
+			System.out.println("Selecting amount of days" );
 		}
 
 
@@ -350,7 +403,7 @@ public class Reasoner {
 				System.out.println("Class type Car recognised.");
 			}
 		}
-		
+
 		for (int x = 0; x < customersyn.size(); x++) { 
 			if (input.contains(customersyn.get(x))) { 
 				classtype = theCustomerList; 
@@ -359,7 +412,7 @@ public class Reasoner {
 				System.out.println("Class type customer recognised.");
 			}
 		}
-		
+
 		for (int x = 0; x < catalogsyn.size(); x++) { 
 			if (input.contains(catalogsyn.get(x))) { 
 				classtype = theCatalogList; 
@@ -368,7 +421,7 @@ public class Reasoner {
 				System.out.println("Class type Catalog recognised.");
 			}
 		}
-		
+
 		for (int x = 0; x < lendingsyn.size(); x++) {
 			if (input.contains(lendingsyn.get(x))) { 
 				classtype = theLendingList; 
@@ -417,7 +470,7 @@ public class Reasoner {
 					+ classtype.get(0).getClass().getSimpleName() + "s:" + ListAll(classtype));
 			Answered = 1; // An answer was given
 		}
-		
+
 		if (questiontype == "checkfor") { // test for a certain Subject instance
 
 			Vector<String> check = CheckFor(classtype, input);
@@ -440,7 +493,7 @@ public class Reasoner {
 					+ Location(classtype, input));
 			Answered = 1; // An answer was given
 		}
-		
+
 		//Car curCar = new Car();
 
 		if ((questiontype == "intent" && classtype == theCarList)
@@ -457,15 +510,83 @@ public class Reasoner {
 		}
 
 		if (questiontype == "introduction") { // Reply to a farewell
-			answer = ("Hi, to start off do you know what type of vehicle you are after?");
-			Answered = 1; // An answer was given
-		}
-		
-		if (questiontype == "name") { // Reply to a farewell
-			answer = ("Hi " + customername + ", to start off do you know what type of vehicle you are after?");
+			answer = ("Hi " + customername01 + ", to start off do you know what type of vehicle you are after?");
 			Answered = 1; // An answer was given
 		}
 
+		//##############################################################
+		if (questiontype == "name") { // Reply to a farewell
+			answer = ("Hi " + customername01 + ", to start off do you know what type of vehicle you are after?");
+			Answered = 1; // An answer was given"
+			/**try {
+				String filepath = "H:\\RentMe - Helpdesk\\Library.xml";
+				DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+				DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+				Document doc = docBuilder.parse(filepath);
+
+				// Get the root element
+				Node company = doc.getFirstChild();
+
+				// Get the staff element , it may not working if tag has spaces, or
+				// whatever weird characters in front...it's better to use
+				// getElementsByTagName() to get it directly.
+				// Node staff = company.getFirstChild();
+
+				// Get the staff element by tag name directly
+				Node staff = doc.getElementsByTagName("staff").item(0);
+
+				// update staff attribute
+				NamedNodeMap attr = staff.getAttributes();
+				Node nodeAttr = attr.getNamedItem("id");
+				nodeAttr.setTextContent("2");
+
+				// append a new node to staff
+				Element age = doc.createElement("age");
+				age.appendChild(doc.createTextNode("28"));
+				staff.appendChild(age);
+
+				// loop the staff child node
+				NodeList list = staff.getChildNodes();
+
+				for (int i = 0; i < list.getLength(); i++) {
+
+		                   Node node = list.item(i);
+
+				   // get the salary element, and update the value
+				   if ("salary".equals(node.getNodeName())) {
+					node.setTextContent("2000000");
+				   }
+
+		                   //remove firstname
+				   if ("firstname".equals(node.getNodeName())) {
+					staff.removeChild(node);
+				   }
+
+				}
+
+				// write the content into xml file
+				TransformerFactory transformerFactory = TransformerFactory.newInstance();
+				Transformer transformer = transformerFactory.newTransformer();
+				DOMSource source = new DOMSource(doc);
+				StreamResult result = new StreamResult(new File(filepath));
+				transformer.transform(source, result);
+
+				System.out.println("Done");
+
+			   } catch (ParserConfigurationException pce) {
+				pce.printStackTrace();
+			   } catch (TransformerException tfe) {
+				tfe.printStackTrace();
+			   } catch (IOException ioe) {
+				ioe.printStackTrace();
+			   } catch (SAXException sae) {
+				sae.printStackTrace();
+			   }
+			}**/
+		}
+
+
+		//################################################################
 		if (questiontype == "dontknowcar") { // Reply to a farewell
 			answer = ("Would you like to <b>view all cars</b>, alternatively simply type the make of a car (i.e BMW)");
 			Answered = 1; // An answer was given
@@ -474,24 +595,37 @@ public class Reasoner {
 		if (Answered == 0) { // No answer was given
 			answer = ("Sorry I didn't understand that.Would you like try again");
 		}
-		
+
 		if (questiontype == "intro") { // Reply to a farewell
 			answer = ("Please enter your name: ");
 			//String customername = input;
 			//System.out.println(customername);
-			
+
 			Answered = 1; // An answer was given
 		}
-		
+
 		if (questiontype == "pickmodel") { // Reply to a farewell
-			answer = ("Please enter your name: ");
-			//String customername = input;
-			//System.out.println(customername);
 			
+			
+			
+			
+			answer = ("How many days would you like to book the " + brand + " for?");
+			//String customername = input;
+			System.out.println(brand);
+
 			Answered = 1; // An answer was given
 		}
-		
-		
+
+		if (questiontype == "periodOfRental") { // Reply to a farewell
+			answer = ("So, just to confirm " + customername01 + " you want to rent a " + customerchoice + " for a total of " + daysofrental1);
+			//String customername = input;
+			System.out.println(customerchoice);
+			System.out.println(daysofrental1);
+
+			Answered = 1; // An answer was given
+		}
+
+
 
 		out.add(input);
 		out.add(answer);
@@ -558,7 +692,9 @@ public class Reasoner {
 				i = thelist.size() + 1; // force break
 			}
 		}
-		
+
+
+
 		//###########################################
 		for (int i = 0; i < theCustomerList.size(); i++) {
 			Customer curCust = (Customer) theCustomerList.get(i); 
@@ -576,10 +712,10 @@ public class Reasoner {
 
 		if (available) {
 			answer = "Yes you can rent one of the following " +" Make: " + curCar.getMake()  +
-					 curCar.getModel()+ "Please let us know for how many days you need the car for ";
-			
+					curCar.getModel()+ "Please let us know for how many days you need the car for ";
+
 		} else {
-			
+
 
 			answer = "Sorry, " + curCar.getMake() + " is not Available. It has been lent by " + customerName 
 					+ " for "+ rentduration
@@ -596,7 +732,7 @@ public class Reasoner {
 
 		return (answer);
 	}
-	
+
 	// Answer a question of the "How many ...." kind
 
 	public Integer Count(List thelist) { // List "thelist": List of Class Instances (e.g. theCarList)
@@ -608,7 +744,7 @@ public class Reasoner {
 		Myface.setmyinfobox(URL3);
 
 		return thelist.size();
-	}
+	} 
 
 	// Answer a question of the "What kind of..." kind
 	public String ListAll(List thelist) {
@@ -651,7 +787,7 @@ public class Reasoner {
 
 		return listemall;
 	}
-	
+
 	public String ListMake(List thelist) {
 		String listmake = "<ul>";
 		if (thelist == theCarList) { 
@@ -663,7 +799,7 @@ public class Reasoner {
 			}
 		}
 
-		
+
 
 		listmake += "</ul>";
 		System.out.println("URL = " + URL);
@@ -804,7 +940,7 @@ public class Reasoner {
 							|| input.contains(curCar.getCarID().toLowerCase()) 
 							|| input.contains(curCar.getMake().toLowerCase())) { 
 						counter = i;
-						
+
 						Currentindex = counter;
 						theRecentThing.clear(); // Clear it before adding (changing) theRecentThing
 						classtype = theCarList; 
@@ -904,7 +1040,7 @@ public class Reasoner {
 		} catch (Exception e) {
 			webtext = "Not yet";
 			System.out.println("Error connecting to wordnet");
-			
+
 		}
 		return webtext;
 	}

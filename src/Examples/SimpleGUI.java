@@ -45,7 +45,7 @@ public class SimpleGUI {
 		Scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		Scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		Scroll.setBorder(BorderFactory.createTitledBorder("Car Rental:"));
-		Scroll.getViewport().setPreferredSize(new Dimension(700, 700));
+		Scroll.getViewport().setPreferredSize(new Dimension(550, 550));
 
 		Info = new JEditorPane("text/html", "");
 		Info.setEditable(false);
@@ -58,7 +58,7 @@ public class SimpleGUI {
 				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		ScrollInfo.setBorder(BorderFactory
 				.createTitledBorder("Background Info:"));
-		ScrollInfo.getViewport().setPreferredSize(new Dimension(700, 700));
+		ScrollInfo.getViewport().setPreferredSize(new Dimension(550, 550));
 
 		Inframe = new JPanel(); // Frame for the Inputelements
 		Outframe = new JPanel(); // Frame for the Outputelements
