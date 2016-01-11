@@ -117,6 +117,7 @@
 	</customer>
 
 <!-- This is where Location starts -->	
+<!-- This is where the location opening hours are, address and phone number if need to contact-->	
 	<location>
 		<address> 34 Working Road </address>
 		<mobileno> 07845895689</mobileno>
