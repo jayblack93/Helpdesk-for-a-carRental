@@ -110,6 +110,14 @@
 		<carID>12345</carID>
 	</customer>
 
+<!-- This is where Location starts -->	
+	<location>
+		<address> 34 Working Road </address>
+		<mobileno> 07845895689</mobileno>
+		<openhours>8:00-20:00</openhours>
+		<postcode> Sw16 5TG</postcode>
+	</location>
+
 
 <!-- This is where customer starts -->
 	<catalog>
