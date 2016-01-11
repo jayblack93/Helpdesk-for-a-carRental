@@ -32,7 +32,7 @@ public class Reasoner {
 	// type:
 	// Path to YOUR-PROJECTROOT-IN-WORKSPACE\xjc.bat yourschemaname.xsd -d src
 	// -p yourclasspackagename
-//yooooo
+//yooooo00000
 	public CarRental ourrental; 
 	static SimpleGUI Myface;
 	// The lists holding the class instances of all domain entities
@@ -64,6 +64,8 @@ public class Reasoner {
 	
 	public Integer Currentindex; // Last Index used
 
+	public String brand ="";
+	
 	public String tooltipstring = "";
 	public String URL = ""; // URL for Wordnet site
 	public String URL2 = ""; // URL for Wikipedia entry
@@ -329,13 +331,29 @@ public class Reasoner {
 		
 		//#################################################################################
 		
-		if (input.contains("i want the") 
-				|| input.contains("i want the"))
+		if (input.contains("3 series") 
+				|| input.contains("5 series")
+				|| input.contains("e230")
+				|| input.contains("mercedes")
+				|| input.contains("bmw")
+				|| input.contains("audi")
+				|| input.contains("porsche")
+				|| input.contains("e230")
+				|| input.contains("e230")
+				|| input.contains("e230")
+				|| input.contains("e230")
+				|| input.contains("c220"))
+		
 		
 		{
 			questiontype = "pickmodel";
 			
-			System.out.println("picking model");
+			if (input.contains("3 series")) {brand = "3series";}
+			if (input.contains("3 series")) {brand = "3series";}									
+			if (input.contains("e230")){brand = "e230";}
+			if (input.contains("mercedes")){brand = "mercedes";}
+			if (input.contains("bmw")){brand = "bmw";}
+			if (input.contains("audi")){brand = "audi";}
 		}
 
 
