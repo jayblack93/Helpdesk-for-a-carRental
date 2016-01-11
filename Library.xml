@@ -16,7 +16,7 @@
 		<model> 3 Series </model>
 		<location>london</location>
 		<type>saloon</type> 
-		<islend>001</islend> <!-- REMOVE ALL -->
+		<islend>001</islend> <!-- REMOVE ALL --> <!--This is chnaged when the car is on rent -->
 	</car>
 	
 	<car>                                       <!-- An Instance of a car -->
@@ -25,63 +25,63 @@
 		<model> 5 Series </model>
 		<location>london</location>
 		<type>saloon</type> 
-		<islend>null</islend>
+		<islend>null</islend>  <!--This is chnaged when the car is on rent -->
 	</car>
 	<car>                                       <!-- An Instance of a car -->
 		<carID>21111</carID>              <!-- And its attributes -->
 		<make>Mercedes</make>
 		<model> C class </model>
 		<location>london</location>
-		<islend>null</islend>
+		<islend>null</islend>     <!--This is chnaged when the car is on rent -->
 	</car>
 	<car>                                       <!-- An Instance of a car -->
 		<carID>12554</carID>              <!-- And its attributes -->
 		<make>Ford</make>
 		<model> Fiesta </model>
 		<location>london</location>
-		<islend>null</islend>
+		<islend>null</islend>  <!--This is chnaged when the car is on rent -->
 	</car>
 	<car>                                       <!-- An Instance of a car -->
 		<carID>18944</carID>              <!-- And its attributes -->
 		<make>Vaxuall</make>
 		<model> Astra </model>
 		<location>london</location>
-		<islend>null</islend>
+		<islend>null</islend>  <!--This is chnaged when the car is on rent -->
 	</car>
 	<car>                                       <!-- An Instance of a car -->
 		<carID>14444</carID>              <!-- And its attributes -->
 		<make>Volkswagen</make>
 		<model> Polo </model>
 		<location>london</location>
-		<islend>null</islend>
+		<islend>null</islend> <!--This is chnaged when the car is on rent -->
 	</car>
 	<car>                                       <!-- An Instance of a car -->
 		<carID>22344</carID>              <!-- And its attributes -->
 		<make>Nissan</make>
 		<model> Micra </model>
 		<location>london</location>
-		<islend>null</islend>
+		<islend>null</islend>   <!--This is chnaged when the car is on rent -->
 	</car>
 	<car>                                       <!-- An Instance of a car -->
 		<carID>12856</carID>              <!-- And its attributes -->
 		<make>Citren</make>
 		<model> C5 </model>
 		<location>london</location>
-		<islend>null</islend>
+		<islend>null</islend><!--This is chnaged when the car is on rent -->
 	</car>
 	<car>                                       <!-- An Instance of a car -->
 		<carID>14754</carID>              <!-- And its attributes -->
 		<make>Porsche</make>
 		<model> 911 </model>
 		<location>london</location>
-		<islend>null</islend>
+		<islend>null</islend> <!--This is chnaged when the car is on rent -->
 	</car>
 	<car>                                       <!-- An Instance of a car -->
 		<carID>16944</carID>              <!-- And its attributes -->
 		<make>Skoda</make>
 		<model> Octovia </model>
 		<location>london</location>
-		<islend>null</islend>
+		<islend>null</islend> <!--This is chnaged when the car is on rent -->
 	</car>
 	
 	
@@ -93,7 +93,7 @@
 		<dateOfStart>2011</dateOfStart>
 		<dateOfEnd>2012</dateOfEnd>
 		<periodOfRent>5 Days</periodOfRent>
-		<carID>12345</carID>
+		<carID>12345</carID> 
 	</lending>
 	
 	<lending>
