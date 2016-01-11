@@ -106,7 +106,13 @@
 	
 <!-- This is where employee starts -->	
 	<customer>
-		<fName> Jonni Asfaha</fName>
+		<fName> Jonni </fName>
+		<sName>Asfaha </sName>
+		<address> 33 The test Street </address>
+		<dob>11/01/1958 </dob>
+		<emailJonni@hotmail.co.uk</email>
+		<mobileNo>07956452412 </mobileNo>
+		<postcode>W5 5RF </postcode>	
 		<carID>12345</carID>
 	</customer>
 
